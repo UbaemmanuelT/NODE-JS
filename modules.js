@@ -62,10 +62,21 @@ notification.on("message", (data) => {
 // STREAMS
 // Readable stream
 import fs from "fs";
-const readStream = fs.createReadStream("./docs/file.txt", { encoding : "utf8" });
+const readStream = fs.createReadStream("./docs/file.txt", { encoding: "utf8" });
 readStream.on("data", (dataChunk) => {
-  console.log("Received dataChunk:", dataChunk);
+  // console.log("Received dataChunk:", dataChunk);
 });
 readStream.on("end", () => {
   console.log("Finished Reading");
 });
+
+// Writable Stream
+const writeStream = fs.createWriteStream("./docs/output.txt");
+// pipe
+// best used for streaming
+// readStream.pipe(writeStream);
+
+// chalk practice
+import chalk from "chalk";
+console.log(chalk.blue.bold.bgWhite("Success"));
+console.log(chalk.red.bold.italic("Error"));
