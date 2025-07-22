@@ -62,13 +62,13 @@ notification.on("message", (data) => {
 // STREAMS
 // Readable stream
 import fs from "fs";
-const readStream = fs.createReadStream("./docs/file.txt", { encoding: "utf8" });
-readStream.on("data", (dataChunk) => {
-  // console.log("Received dataChunk:", dataChunk);
-});
-readStream.on("end", () => {
-  console.log("Finished Reading");
-});
+// const readStream = fs.createReadStream("./docs/file.txt", { encoding: "utf8" });
+// readStream.on("data", (dataChunk) => {
+//   // console.log("Received dataChunk:", dataChunk);
+// });
+// readStream.on("end", () => {
+//   // console.log("Finished Reading");
+// });
 
 // Writable Stream
 const writeStream = fs.createWriteStream("./docs/output.txt");
@@ -78,5 +78,68 @@ const writeStream = fs.createWriteStream("./docs/output.txt");
 
 // chalk practice
 import chalk from "chalk";
+import { rejects } from "assert";
 console.log(chalk.blue.bold.bgWhite("Success"));
 console.log(chalk.red.bold.italic("Error"));
+
+// CALLBACK FUNCTION
+// console.log("start");
+// setTimeout(() => {
+//   console.log("Finished waiting after 5 seconds");
+// }, 5000);
+// console.log("end");
+
+// PROMISES
+const myPromise = new Promise((resolve, reject) => {
+  const examPassed = true;
+  if (examPassed) {
+    resolve("Exam passed Successfully");
+  } else {
+    reject("Exam failed woefully");
+  }
+});
+// To see the results, you need .then() and .catch() method
+myPromise
+  .then((msg) => {
+    // console.log(msg);
+  })
+  .catch((err) => {
+    // console.log(err);
+  });
+
+// READ/WRITE FILE USING PROMISES
+// WRITE FILE USING PROMISES
+import { readFile, writeFile } from "fs/promises";
+async function writeToFile() {
+  try {
+    await writeFile("./docs/docs.txt", "Hello Node JS from promises", "utf8");
+    // console.log('file written successfully')
+  } catch (err) {
+    console.error("error writing file", err);
+  }
+}
+await writeToFile();
+
+//READ USING PROMISES
+async function readToFile() {
+  try {
+    const content = await readFile("./docs/docs.txt", "utf8");
+    console.log("file content:", content);
+  } catch (err) {
+    console.error("error reading file", err);
+  }
+}
+await readToFile();
+
+// ASYNC/AWAIT
+const delayTimeout = (ms) => {
+  return new Promise((resolve)=> setTimeout(resolve, ms));
+}
+async function greet() {
+  console.log('timer started');
+  await delayTimeout(6000);
+  console.log('Greetings after waiting for 6 seconds');
+  console.log('timer ended')
+}
+greet();
+
