@@ -1,23 +1,46 @@
-{
-  "name": "node-js",
-  "version": "1.0.0",
-  "main": "nodeIntro.js",
-  "type": "module",
-  "directories": {
-    "doc": "docs"
+[
+  {
+    "id": 1,
+    "name": "Favour"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon modules.js"
+  {
+    "id": 2,
+    "name": "Johnny"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "nodemon": "^3.1.10"
+  {
+    "id": 3,
+    "name": "Jay"
   },
-  "dependencies": {
-    "chalk": "^5.4.1"
+  {
+    "id": 4,
+    "name": "Charlie"
+  },
+  {
+    "id": 5,
+    "name": "Dan"
+  },
+  {
+    "id": 6,
+    "name": "Jacob"
+  },
+  {
+    "id": 7,
+    "name": "Jay"
+  },
+  {
+    "id": 8,
+    "name": "Blessing"
+  },
+  {
+    "id": 9,
+    "name": "Emmanuel"
+  },
+  {
+    "id": 10,
+    "name": "Jesse"
+  },
+  {
+    "id": 11,
+    "name": "Chucks"
   }
-}
+]
