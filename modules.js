@@ -109,27 +109,27 @@ myPromise
 
 // READ/WRITE FILE USING PROMISES
 // WRITE FILE USING PROMISES
-import { readFile, writeFile } from "fs/promises";
-async function writeToFile() {
-  try {
-    await writeFile("./docs/docs.txt", "Hello Node JS from promises", "utf8");
-    // console.log('file written successfully')
-  } catch (err) {
-    console.error("error writing file", err);
-  }
-}
-await writeToFile();
+// import { readFile, writeFile } from "fs/promises";
+// async function writeToFile() {
+//   try {
+//     await writeFile("./docs/docs.txt", "Hello Node JS from promises", "utf8");
+//     // console.log('file written successfully')
+//   } catch (err) {
+//     console.error("error writing file", err);
+//   }
+// }
+// await writeToFile();
 
 //READ USING PROMISES
-async function readToFile() {
-  try {
-    const content = await readFile("./docs/docs.txt", "utf8");
-    console.log("file content:", content);
-  } catch (err) {
-    console.error("error reading file", err);
-  }
-}
-await readToFile();
+// async function readToFile() {
+//   try {
+//     const content = await readFile("./docs/docs.txt", "utf8");
+//     console.log("file content:", content);
+//   } catch (err) {
+//     console.error("error reading file", err);
+//   }
+// }
+// await readToFile();
 
 // ASYNC/AWAIT
 const delayTimeout = (ms) => {
@@ -137,9 +137,23 @@ const delayTimeout = (ms) => {
 }
 async function greet() {
   console.log('timer started');
-  await delayTimeout(6000);
-  console.log('Greetings after waiting for 6 seconds');
+  await delayTimeout(9000);
+  console.log('Greetings after waiting for 9 seconds');
   console.log('timer ended')
 }
-greet();
+// greet();
 
+//util.promisify()
+import { promisify } from "util";
+import { readFile } from "fs";
+const readFileAsync = promisify(readFile);
+
+async function readFileData() {
+  try{
+    const data = await readFileAsync("./data.json", 'utf8');
+  console.log(data);
+  } catch(err){
+    console.error("Error message:", err);
+  }
+}
+await readFileData();
