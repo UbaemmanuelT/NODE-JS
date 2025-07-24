@@ -1,33 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "Favour"
-  },
-  {
-    "id": 2,
-    "name": "Johnny"
-  },
-  {
-    "id": 3,
-    "name": "Jay"
-  },
-  {
-    "id": 4,
-    "name": "Charlie"
-  },
-  {
-    "id": 5,
-    "name": "Dan"
-  },
-  {
-    "id": 6,
-    "name": "Jacob"
-  },
-  {
-    "id": 7,
-    "name": "Jay"
-  },
-  {
     "id": 8,
     "name": "Blessing"
   },
@@ -36,11 +8,15 @@
     "name": "Emmanuel"
   },
   {
-    "id": 10,
-    "name": "Jesse"
+    "id": 11,
+    "name": "sam"
   },
   {
-    "id": 11,
-    "name": "Chucks"
+    "id": 12,
+    "name": "HOD"
+  },
+  {
+    "id": 12,
+    "name": "HOD"
   }
 ]
