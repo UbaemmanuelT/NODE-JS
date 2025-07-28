@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Express JS Contact Page</h1>
+    <nav>
+      <a href="/">Home Page</a>
+      <a href="/about">About Page</a>
+      <a href="/contact">Contact Page</a>
+    </nav> <br>
+    <form action="/contact" method="POST">
+      <input name="name" placeholder="Your name" required/> <br /> <br>
+      <textarea name="message" placeholder="Your message" required></textarea> <br />
+      <button type="submit">Send</button>
+    </form>
+  </body>
+</html>
