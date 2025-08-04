@@ -56,14 +56,46 @@ app.get("/api/users/:id", (req, res) => {
   if (eachUser) {
     res.json(eachUser);
     console.log(`GET request to /api/users/${userId} received`);
-  } else{
-    res.status(404).send('User not found');
+  } else {
+    res.status(404).send("User not found");
     console.log(`GET request to /api/users/${userId} not found`);
   }
 });
-
-// POST request
-app.post("/contact", (req, res) => {
-  const { name, message } = req.body;
-  res.send(`Received an inbox from ${name} with a message: ${message}`);
+// Query String
+app.get("/search", (req, res) => {
+  const { name } = req.query;
+  if (!name){
+    return res.status(400).json({error: "Name query parameter is required"})
+  }
+  const nameResult = users.filter(user => {
+    return user.name.toLowerCase().includes(name.toLowerCase());
+  })
+  res.json(nameResult)
 });
+
+// POST request (create new user)
+app.post("/contact", (req, res) => {
+  const { name, email, message } = req.body;
+  // res.send(`Received an inbox from ${name} with a message: ${message}`);
+  const newUser = {
+    id: users.length + 1,
+    name,
+    email,
+    message
+  }
+  users.push(newUser);
+  res.status(201).json(newUser);
+});
+
+// PUT (update a user by ID)
+app.put("/api/users/:id", (req, res) => {
+  const userId = parseInt(req.params.id);
+  const {id, name, email, message} = req.body;
+  const index = users.findIndex((u) => u.id === id);
+  if (index !== -1) {
+    users[index] = {id, name, email, message};
+    res.json(users[index]);
+  } else {
+    res.status(404).send("user not found");
+  }
+})
