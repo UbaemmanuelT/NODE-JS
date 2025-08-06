@@ -12,4 +12,32 @@ Code   Meaning
 
 ?key1=value1&key2=value2
 
-http://localhost:3000/search
+Middleware in Express
+A middleware function is simply a function that has access to the request object (req), the response object (res), 
+and the next middleware function in the application's request-response cycle.
+
+How it Works:
+When a request hits your Express server, it goes through a "pipeline" of middleware functions, one after another. 
+Each middleware function can:
+- Execute any code.
+- Make changes to the req and res objects.
+- End the request-response cycle (e.g., by sending a response with res.send() or res.json()).
+- Call the next() middleware function in the stack.
+
+Types of Middleware
+1. Application-level middleware:
+- Applied to every single request that hits the server.
+- Used with app.use(middlewareFunction).
+2. Router-level middleware:
+- Applied to a specific route or a group of routes.
+- Used with app.get('/route', middleware, handler) or router.use(...).
+3. Built-in Middleware:
+- Express provides some built-in middleware functions out of the box.
+- express.static(root): Serves static files.
+- express.json(): Parses incoming requests with JSON payloads.
+- express.urlencoded({ extended: true }): Parses incoming requests with URL-encoded payloads (e.g., from HTML forms).
+4. Third-Party Middleware:
+- Middleware functions developed by the community and available on npm.
+5. Custom Middleware:
+- Middleware functions you write yourself to handle specific application logic.
+Examples: Custom logging, authentication checks, validation, error handling.

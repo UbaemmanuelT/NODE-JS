@@ -9,18 +9,60 @@ app.use(express.json());
 // middleware required to handle form data
 app.use(express.urlencoded({ extended: true }));
 
-// listen for request
-app.listen(3000);
-
 const fileName = fileURLToPath(import.meta.url);
 const dirName = dirname(fileName);
 
 // dummy api data
 const users = [
-  { id: 1, name: "Alice", email: "alice@example.com" },
-  { id: 2, name: "Bob", email: "bob@example.com" },
-  { id: 3, name: "Charlie", email: "charlie@example.com" },
+  {
+    id: 1,
+    name: "Alice",
+    email: "alice@example.com",
+    message: "Hey i am Alice",
+  },
+  { id: 2, name: "Bob", email: "bob@example.com", message: "Hey i am Bob" },
+  {
+    id: 3,
+    name: "Charlie",
+    email: "charlie@example.com",
+    message: "Hey i am Charlie",
+  },
 ];
+
+// Custom logging middleware
+app.use((req, res, next) => {
+  const nigeriaTime = new Date().toLocaleString("en-Ng", {
+    timeZone: "Africa/Lagos",
+    hours12: false,
+  });
+
+  console.log(`[${nigeriaTime}] ${req.method} ${req.url}`);
+  next();
+});
+
+// Validation Middleware
+function validateUserInput(req, res, next) {
+  const {name, email, message} = req.body;
+  // validate name
+  if (!name || typeof name !== "string" || name.length < 2) {
+    return res.status(400).json({
+      error: "Name is required and must be at least 2 characters long",
+    });
+  }
+  // validate email
+  if (!email || !email.includes("@")) {
+    return res.status(400).json({
+      error: " A valid email is required",
+    });
+  }
+  // validate message
+  if (message && typeof message !== "string") {
+    return res.status(400).json({
+      error: "Message must be a string",
+    });
+  }
+  next();
+}
 
 // Routing
 // GET request
@@ -64,38 +106,56 @@ app.get("/api/users/:id", (req, res) => {
 // Query String
 app.get("/search", (req, res) => {
   const { name } = req.query;
-  if (!name){
-    return res.status(400).json({error: "Name query parameter is required"})
+  if (!name) {
+    return res.status(400).json({ error: "Name query parameter is required" });
   }
-  const nameResult = users.filter(user => {
+  const nameResult = users.filter((user) => {
     return user.name.toLowerCase().includes(name.toLowerCase());
-  })
-  res.json(nameResult)
+  });
+  res.json(nameResult);
 });
 
 // POST request (create new user)
-app.post("/contact", (req, res) => {
+app.post("/contact", validateUserInput, (req, res) => {
   const { name, email, message } = req.body;
   // res.send(`Received an inbox from ${name} with a message: ${message}`);
   const newUser = {
     id: users.length + 1,
     name,
     email,
-    message
-  }
+    message,
+  };
   users.push(newUser);
   res.status(201).json(newUser);
 });
 
 // PUT (update a user by ID)
-app.put("/api/users/:id", (req, res) => {
+app.put("/api/users/:id", validateUserInput, (req, res) => {
   const userId = parseInt(req.params.id);
-  const {id, name, email, message} = req.body;
+  const { id, name, email, message } = req.body;
   const index = users.findIndex((u) => u.id === id);
   if (index !== -1) {
-    users[index] = {id, name, email, message};
+    users[index] = { id, name, email, message };
     res.json(users[index]);
   } else {
     res.status(404).send("user not found");
   }
-})
+});
+
+// DELETE a user by ID
+app.delete("/api/users/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = users.findIndex((u) => u.id === id);
+  // condition
+  if (index !== -1) {
+    users.slice(index, 1);
+    res.send("users deleted successfully");
+  } else {
+    res.status(400).send("User not found");
+  }
+});
+
+// listen for request
+app.listen(3000, () => {
+  console.log("Server is up");
+});
